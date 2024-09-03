@@ -968,10 +968,6 @@ require('lazy').setup({
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
-<<<<<<< HEAD
-require('nvim-treesitter.install').compilers = { 'zig' }
-
--- undotree fix
-=======
 require ('nvim-treesitter.install').compilers = { 'zig' }
->>>>>>> 3396b340841e8749a6d9ccc762794f075a361d92
+
+vim.g.undotree_DiffCommand = "FC"
