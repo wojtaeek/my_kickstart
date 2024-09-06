@@ -231,6 +231,7 @@ require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
   'github/copilot.vim',
+  'xiyaowong/transparent.nvim',
   'mbbill/undotree',
   {
     'nvim-neo-tree/neo-tree.nvim',
@@ -241,7 +242,35 @@ require('lazy').setup({
       'MunifTanjim/nui.nvim',
       -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
     },
+    --require("neo-tree.nvim").setup({
+    --  default_component_configs = {
+    --    icon = {
+    --      folder_closed = "",
+    --      folder_open = "",
+    --      folder_empty = "󰜌",
+    --      provider = function(icon, node, state)
+    --        if node.type == "file" or node.type == "terminal" then
+    --          local success, web_devicons = pcall(require, "nvim-web-devicons")
+    --          local name = node.type == "terminal" and "terminal" or node.name
+    --          if success then
+    --            local devicon, hl = web_devicons.get_icon(name)
+    --            icon.text = devicon or icon.text
+    --            icon.highlight = hl or icon.highlight
+    --          end
+    --        end
+    --      end,
+    --      default = "*",
+    --      highlight = "NeoTreeFileIcon"
+    --    },
+    --  },
+    --})
+    --  opts = {
+    --    filesystem = {
+    --      hijack_netrw_behavior = 'disabled',
+    --    },
+    --  },
   },
+  --'nvim-tree/nvim-tree.lua',
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
   -- keys can be used to configure plugin behavior/loading/etc.
@@ -928,12 +957,12 @@ require('lazy').setup({
   --  Here are some example plugins that I've included in the Kickstart repository.
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
-  -- require 'kickstart.plugins.debug',
-  -- require 'kickstart.plugins.indent_line',
-  -- require 'kickstart.plugins.lint',
-  -- require 'kickstart.plugins.autopairs',
-  -- require 'kickstart.plugins.neo-tree',
-  -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
+  require 'kickstart.plugins.debug',
+  require 'kickstart.plugins.indent_line',
+  require 'kickstart.plugins.lint',
+  require 'kickstart.plugins.autopairs',
+  require 'kickstart.plugins.neo-tree',
+  require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
@@ -968,6 +997,6 @@ require('lazy').setup({
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
-require ('nvim-treesitter.install').compilers = { 'zig' }
+require('nvim-treesitter.install').compilers = { 'zig' }
 
-vim.g.undotree_DiffCommand = "FC"
+vim.g.undotree_DiffCommand = 'FC'
