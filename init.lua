@@ -136,7 +136,7 @@ vim.opt.updatetime = 250
 
 -- Decrease mapped sequence wait time
 -- Displays which-key popup sooner
-vim.opt.timeoutlen = 300
+vim.opt.timeoutlen = 500
 
 -- Configure how new splits should be opened
 vim.opt.splitright = true
@@ -1202,12 +1202,19 @@ require('lazy').setup({
       auto_install = true,
       highlight = {
         enable = true,
+        additional_vim_regex_highlighting = false,
+        use_languagetree = false,
+        disable = function(_, bufnr)
+          local buf_name = vim.api.nvim_buf_get_name(bufnr)
+          local file_size = vim.api.nvim_call_function('getfsize', { buf_name })
+          return file_size > 256 * 1024
+        end,
         -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
         --  If you are experiencing weird indenting issues, add the language to
         --  the list of additional_vim_regex_highlighting and disabled languages for indent.
-        additional_vim_regex_highlighting = { 'ruby' },
+        --additional_vim_regex_highlighting = { 'ruby' },
       },
-      indent = { enable = true, disable = { 'ruby' } },
+      indent = { enable = true, disable = { 'ruby', 'json' } },
     },
     -- There are additional nvim-treesitter modules that you can use to interact
     -- with nvim-treesitter. You should go explore a few and see what interests you:
@@ -1263,6 +1270,21 @@ require('lazy').setup({
   },
 })
 
+function Get_file_size()
+  local filepath = vim.fn.expand '%' -- Get the file path of the current buffer
+  if filepath == '' then
+    return nil -- Return nil if there is no file path (e.g., an empty buffer)
+  end
+
+  local file = io.open(filepath, 'r')
+  if not file then
+    return nil -- Return nil if the file cannot be opened
+  end
+
+  local size = file:seek 'end'
+  file:close()
+  return size
+end
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
 require('nvim-treesitter.install').compilers = { 'zig' }
